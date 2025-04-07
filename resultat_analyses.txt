@@ -1,0 +1,24 @@
+📊 Chiffre d'affaires
+|   chiffre_affaires |
+|-------------------:|
+|            5268.78 |
+
+📊 Ventes par produit
+| produit   |   prix_unitaire |   nombre_vendu |   chiffre_affaires_produit |
+|:----------|----------------:|---------------:|---------------------------:|
+| Produit D |           79.99 |             21 |                    1679.79 |
+| Produit E |           39.99 |             35 |                    1399.65 |
+| Produit A |           49.99 |             24 |                    1199.76 |
+| Produit B |           19.99 |             27 |                     539.73 |
+| Produit C |           29.99 |             15 |                     449.85 |
+
+📊 Ventes par ville
+| ville      |   nombre_ventes |   quantite_totale |   chiffre_affaires_ville |
+|:-----------|----------------:|------------------:|-------------------------:|
+| Lyon       |               5 |                21 |                  1059.79 |
+| Marseille  |               6 |                27 |                  1009.73 |
+| Bordeaux   |               4 |                19 |                   829.81 |
+| Paris      |               6 |                20 |                   799.8  |
+| Nantes     |               3 |                17 |                   739.83 |
+| Strasbourg |               3 |                11 |                   579.89 |
+| Lille      |               3 |                 7 |                   249.93 |
