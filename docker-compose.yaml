@@ -1,0 +1,27 @@
+services:
+  db:
+    image: keinos/sqlite3
+    container_name: sqlite3_db
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./data:/workspace
+    networks:
+      - app_network
+
+  app:
+    build: .
+    container_name: python_scripts
+    working_dir: /usr/src/app
+    depends_on:
+      - db
+    volumes:
+      - ./data:/usr/src/app/data
+    networks:
+      - app_network
+    command: ["python", "init_db.py"]
+    # command: sh -c "python init_db.py && sleep infinity"
+
+networks:
+  app_network:
