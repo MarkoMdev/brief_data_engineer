@@ -20,10 +20,14 @@ Deux services Docker :
 
 | Service | Rôle | Volumes/Ports |
 |--------|------|----------------|
-| `app` | Exécute les scripts Python d'import et d'analyse | Monté sur `./` |
+| `app` | Exécute les scripts Python d'import et d'analyse | Monté sur `./data:/usr/src/app/data` |
 | `db` | Fournit une CLI SQLite pour accéder à la base (`ventes.db`) | `./data:/workspace` |
 
 Les deux services partagent un réseau Docker et un volume `data/` contenant la base SQLite.
+
+![Architecture](Schema_archi.png)
+![Base de données](Schema_data_full.png)
+
 
 ---
 
@@ -31,15 +35,14 @@ Les deux services partagent un réseau Docker et un volume `data/` contenant la 
 
 ```
 projet-ventes/
-├── data/                  ← Base SQLite stockée ici
+├── data/                  ← Volume et base SQLite stockée ici
 ├── scripts/               ← Scripts Python
 │   ├── init_db.py
 │   ├── analyser_ventes.py
 │   └── config.py        ← Fichier de configuration
 ├── Dockerfile
 ├── docker-compose.yml
-├── requirements.txt
-└── Makefile               ← Raccourcis d'exécution
+└── requirements.txt
 ```
 
 ---
@@ -47,61 +50,22 @@ projet-ventes/
 ## ⚙️ Pré-requis
 
 - Docker
-- (facultatif) `make` pour simplifier les commandes
 
 ---
 
 ## 🧪 Utilisation
 
-### 1. 🔨 Construire l'image
+### 1. 🔨 Construire l'image et lancer les conteneurs
 
 ```bash
-make build
+docker compose up --build
 ```
 
-### 2. 🧬 Initialiser la base et importer les données
+### 2. 🧬 Lancer le conteneur d'analyse
 
 ```bash
-make init
+docker compose run app python analyser_ventes.py
 ```
-
-### 3. 📊 Lancer les analyses SQL
-
-```bash
-make analyse
-```
-
-### 4. 🧪 Tout faire (import + analyse)
-
-```bash
-make full
-```
-
----
-
-## 📈 Requêtes réalisées
-
-### 4.a - Chiffre d'affaires total
-
-```sql
-SELECT SUM(v.quantity * p.prix) FROM ventes v JOIN produits p ON v.id_produit = p.id_produit;
-```
-
-### 4.b - Ventes par produit
-
-Affiche : produit, prix unitaire, quantité totale, CA total
-
-### 4.c - Ventes par ville
-
-Affiche : ville, nombre de ventes, CA total
-
----
-
-## 🛡️ Hypothèses et contraintes
-
-- La table `ventes` n'a pas d'identifiant unique fourni → une **clé primaire composite** est définie sur `(date, id_produit, id_magasin, quantity)` pour éviter les doublons exacts.
-- Si deux ventes strictement identiques existent dans la source, une seule sera importée.
-- Les scripts sont conçus pour être **relançables sans réinsérer les doublons** (`INSERT OR IGNORE`).
 
 ---
 
@@ -115,4 +79,4 @@ Affiche : ville, nombre de ventes, CA total
 
 ## 🙋 Auteurs
 
-Projet réalisé dans le cadre de la sélection Data Engineer chez Simplon.
+Marko Macanovic
