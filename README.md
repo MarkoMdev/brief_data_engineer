@@ -1,4 +1,4 @@
-# 📊 Projet d'analyse des ventes - Sélection Data Engineer - Simplon
+# 📊 Projet d'analyse des ventes 
 
 Ce projet consiste à concevoir une architecture simple pour analyser les ventes d'une PME, en utilisant SQLite, Docker, et Python.
 
@@ -77,6 +77,6 @@ docker compose run app python analyser_ventes.py
 
 ---
 
-## 🙋 Auteurs
+## 🙋 Auteur
 
 Marko Macanovic
